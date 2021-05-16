@@ -11,14 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
-    <script src="annotator.min.js">
+<!--     <script src="annotator.min.js"> -->
 
-    </script>
-    <link rel="stylesheet" type="text/css" href="annotator.min.css">
-    <script src="annotator.store.min.js"></script>
+    <!-- </script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="annotator.min.css"> -->
+<!--     <script src="annotator.store.min.js"></script>
     <script src="annotator.auth.min.js"></script>
     <script src="annotator.permissions.min.js"></script>
-    <script src="annotator.tags.min.js"></script>
+    <script src="annotator.tags.min.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <title>NewsBuddy</title>
     <style>
@@ -123,25 +123,19 @@
                             Regular intake of Dabur Chyawanprash reduces the risk of COVID-19 infection : Study
                         </div>
                         <br><br>
-                        <div id="lol" class="ui left aligned padded grid" style="text-align: left !important;"> 
-                            <p>
-                                In a major breakthrough development, DABUR India Limited, one of India’s leading Ayurvedic companies, has completed a large scale, multicentric, clinical study on their premium Ayurvedic healthcare product– DABUR Chyawanprash.
-                            </p>
-                            <p>
+                        <div id="lol"> 
+                            <p>In a major breakthrough development, DABUR India Limited, one of India’s leading Ayurvedic companies, has completed a large scale, multicentric, clinical study on their premium Ayurvedic healthcare product– DABUR Chyawanprash.
+
                                 This clinical study evaluated the beneficial role of Dabur Chyawanprash as a prophylaxis remedy for COVID-19 infection. This study was conducted following applicable GCP guidelines, was approved by multiple Institutional Ethics Committees and was registered with Clinical Trials Registry of India which is a portal of ICMR. Subjects were enrolled in the study after taking an informed consent from all the study participants.
-                            </p>
-                            <p>
-                                The findings of the study reveal that <span class="highlighted"> regular use of Dabur Chyawanprash reduced the risk of COVID-19 infection by up to 12 times in comparison to control group which was not consuming Chyawanprash </span>. It was also noted that with regular usage of Dabur Chyawanprash, there was up to 6 times lesser severity of COVID 19 infections when compared to subjects in control group. The severity of COVID-19 was assessed as per
+
+                                The findings of the study reveal that <span class="highlighted line1"> regular use of Dabur Chyawanprash reduced the risk of COVID-19 infection by up to 12 times in comparison to control group which was not consuming Chyawanprash </span>. It was also noted that with regular usage of Dabur Chyawanprash, there was up to 6 times lesser severity of COVID 19 infections when compared to subjects in control group. The severity of COVID-19 was assessed as per
                                 ordinal scale published by the WHO (World Health Organization) for COVID-19.
-                            </p> 
-                            <p>
+
                                 In a major breakthrough development, DABUR India Limited, one of India’s leading Ayurvedic companies, has completed a large scale, multicentric, clinical study on their premium Ayurvedic healthcare product– DABUR Chyawanprash.
-                            </p>
-                            <p>
+
                                 This clinical study evaluated the beneficial role of Dabur Chyawanprash as a prophylaxis remedy for COVID-19 infection. This study was conducted following applicable GCP guidelines, was approved by multiple Institutional Ethics Committees and was registered with Clinical Trials Registry of India which is a portal of ICMR. Subjects were enrolled in the study after taking an informed consent from all the study participants.
-                            </p>
-                            <p>
-                                The findings of the study reveal that <span class="highlighted"> regular use of Dabur Chyawanprash reduced the risk of COVID-19 infection by up to 12 times in comparison to control group which was not consuming Chyawanprash </span>. It was also noted that with regular usage of Dabur Chyawanprash, there was up to 6 times lesser severity of COVID 19 infections when compared to subjects in control group. The severity of COVID-19 was assessed as per
+The findings of the study reveal that 
+<span class="highlighted" name = "line1" id = "wohoho"> regular use of Dabur Chyawanprash reduced the risk of COVID-19 infection by up to 12 times in comparison to control group which was not consuming Chyawanprash </span>. It was also noted that with regular usage of Dabur Chyawanprash, there was up to 6 times lesser severity of COVID 19 infections when compared to subjects in control group. The severity of COVID-19 was assessed as per
                                 ordinal scale published by the WHO (World Health Organization) for COVID-19.
                             </p> 
                         </div>
@@ -221,48 +215,38 @@
             </div>
         </div>
     </div>
+            <input type="button"
+            value="Get Selection"
+            onmousedown="getSelectedText()">
 </body>
-<script>
-        var custom_ui_main = function () 
-        {
-            var element = document.querySelector(document.body);
-            var makeAnnotation = UtilityService.annotationFactory(element, ".annotator-hl");
-            var ui = { interactionPoint: null };
-            return {
-                start: function start() 
-                {
-                ui.highlighter = new annotator.ui.highlighter.Highlighter(element);
-                ui.textselector = new annotator.ui.textselector.TextSelector(element, 
-                {
-                onSelection: function onSelection(ranges, event) {if (ranges.length > 0) { annotation = makeAnnotation(ranges);var commentModalPosition = UtilityService.mousePosition(event);}}});},
-                destroy: function destroy() {ui.highlighter.destroy();ui.textselector.destroy();},
-                annotationCreated: function annotationCreated(a) {ui.highlighter.draw(a);},
-                annotationsLoaded: function annotationsLoaded(a) {ui.highlighter.drawAll(a).then(function () {})},
-                annotationDeleted: function annotationDeleted(a) {ui.highlighter.undraw(a);},
-                annotationUpdated: function annotationUpdated(a) {ui.highlighter.redraw(a);},
-            }
-        }
-        // var app = new annotator.App();
-        // app.include(custom_ui_main);
-        // app.include(annotator.storage.http);
-        // app.start();
-        jQuery(function ($) {
-        if (typeof $.fn.annotator !== 'function') {
-        alert("Ooops!");
-        } else {
-        $('#lol').annotator()
-                     .annotator('addPlugin', 'Permissions')
-                     .annotator('addPlugin', 'Markdown')
-                     .annotator('addPlugin', 'Tags');
 
-        $('#lol').data('annotator').plugins['Permissions'].setUser("Anuneet");
-      }
-    });
-  </script>
 <script>
 
     // document.addEventListener
+            // Function to get the Selected Text
+            function getSelectedText() {
+                var selectedText = '';
 
+                // window.getSelection
+                if (window.getSelection) {
+                                        selectedText = window.getSelection();
+                                        console.log("window,",Math.min(window.getSelection().anchorOffset,window.getSelection().focusOffset),Math.max(window.getSelection().anchorOffset,window.getSelection().focusOffset),window.getSelection().toString())
+
+                }
+                document.getSelection
+                if (document.getSelection ) {
+                    selectedText = document.getSelection();
+                }
+                // document.selection
+                else if (document.selection) {
+                    // console.log("range",document.selection.createRange().startOffset);
+                    selectedText =
+                    document.selection.createRange().text;
+
+                } else return;
+                // To write the selected text into the textarea
+                document.testform.selectedtext.value = selectedText;
+            }
     document.addEventListener('DOMContentLoaded', function () {
         const chart = Highcharts.chart('chartContainer', {
             chart: {
@@ -314,12 +298,26 @@
     $('.highlighted').click((e)=>{
         $('.ui.tiny.modal').modal('show');
     })
-    $('body').on('click', '.annotator-hl', (e)=>{
-        $('.ui.tiny.modal').modal('show');
-    })
+
     $('.ui.sticky')
     .sticky({
         context: '#example1'
     })
 </script>
 </html>
+
+
+
+
+
+article
+
+-> line
+
+{for line in article }
+
+<span class = "highlighted {{line.id}}">
+    
+</span>
+
+<span class="line1"></span>

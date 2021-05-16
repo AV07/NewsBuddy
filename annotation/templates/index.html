@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+<!--     <script src="annotator.min.js"> -->
+
+    <!-- </script> -->
+    <!-- <link rel="stylesheet" type="text/css" href="annotator.min.css"> -->
+<!--     <script src="annotator.store.min.js"></script>
+    <script src="annotator.auth.min.js"></script>
+    <script src="annotator.permissions.min.js"></script>
+    <script src="annotator.tags.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <title>NewsBuddy</title>
+    <style>
+        *{
+            font-family: Montserrat !important;
+        }
+        .bigHeading{
+            font-size: 3.5em !important;
+            font-weight: 900 !important;
+            font-family: "Pathway Gothic One" !important;
+        }
+        p{
+            font-size: 1.25em;
+        }
+        .borderless{
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .highlighted{
+            background-color:rgb(254, 255,165);
+        }
+        .scrolling.content{
+            padding: 0 !important;
+        }
+        .comment{
+            padding: 1.5rem !important;
+        }
+        /* .negative.comment{
+            background-color: rgba(255, 0, 0, 0.5) !important;
+        }
+        .positive.comment{
+            background-color: rgba(0, 255, 0, 0.5) !important;
+        } */
+        .agree{
+            font-weight: bold !important;
+            color:#55C153;
+        }
+        .disagree{
+            font-weight: bold !important;
+            color:#CE4343;
+        }
+        .commentAvatar{
+            border-radius: 100% !important;
+        }
+        i{
+            font-family: Icons !important;
+        }
+        .upvote, .downvote{
+            transition: all 0.365s !important;
+        }
+        .upvote:hover{
+            color: #55C153 !important;
+        }
+        .downvote:hover{
+            color: #CE4343 !important;
+        }
+        .ui.huge.menu{
+            background-color: #E8E8E8 !important;
+        }
+        .item{
+            font-family: "Pathway Gothic One" !important;
+            font-size: 1.3em;
+        }
+        .mainContainer{
+            height: 100vh !important;
+            background-color: #3F6DAB !important;
+        }
+        .innerContainer{
+            background-color: #fff;
+        }
+        .textContainer{
+            padding-top: calc(0.5rem + 48px) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui fluid container mainContainer">
+        <div class="ui center aligned grid" style="margin-top: 0 !important;">            
+            <div class="ui fourteen wide column innerContainer" id="example1" style="padding-left: 0 !important; padding-right: 0 !important; height: 100vh !important; overflow-y: scroll !important;">
+                <div class="ui top fixed huge menu" style="border-radius: 0 !important; width: calc(87.5% + 1.75rem) !important; margin-left: calc(6.25% - 0.875rem) !important">
+                    <div class="huge header borderless item">
+                        NewsBuddy
+                    </div>
+                    <div class="right menu">
+                        <div class="borderless item">
+                            About NewsBuddy
+                        </div>
+                        <div class="borderless item">
+                            How It Works
+                        </div>
+                        <div class="borderless item">
+                            The Team
+                        </div>
+                        <div class="borderless item">
+                            <a href="{% url 'annotation:profile' %} " style="color: black">
+                                    Profile
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui center aligned padded grid">
+                    <div class="ui ten wide column textContainer">
+                        <div class="ui header bigHeading">
+                            {{article.title}}
+                        </div>
+                        <br><br>
+                        <div id="lol"> 
+                            <p>
+                            	{% for line in article.line_set.all %}
+                                    {% if line.comments.all|length %}
+                                        <span class = "highlighted" id = {{line.id}}>
+                                            {{line}}.
+                                        </span>
+                                    {% else %}
+                                    <span class = "notHighlighted" id = {{line.id}}>
+                                        {{line}}.
+                                    </span>
+                                    {% endif %}
+                            	{% endfor %}
+                            </p> 
+                        </div>
+                    </div>
+                </div>
+                {% for line in article.line_set.all %}
+                    {% if line.comments.all|length %}
+                        <div class="ui tiny longer modal modal{{ line.id }}">
+                            <div class="header">Comments</div>
+                            <div class="scrolling content">
+                                <div id="chartContainer{{ line.id }}" style="width:100%; height:200px; margin-top: 10px !important;"></div>
+                                <br>
+                                <br>
+                                <div class="ui center aligned grid">
+                                    <div class="ui button addComment{{line.id}}">Add comment</div>
+                                </div>
+                                <div class="ui padded grid">
+                                    <form class="ui form innerForm{{line.id}}" style="width: 100% !important; display: none !important;" method="POST" action="/annotation/add_annotation">
+                                        {% csrf_token %}
+                                        <div class="field">
+                                            <label for="">Opinion</label>
+                                            <textarea name="text" cols="30" rows="10" style="width: 100% !important; resize: none !important;;"></textarea>
+                                        </div>
+                                        <div class="field">
+                                            <label for="">Source</label>
+                                            <input type="url" name="link">
+                                        </div>
+                                        <input type="hidden" name="id" value={{line.id}}>
+                                        <div class="inline fields">
+                                            <label for="">Do you agree with the line?</label>
+                                            <div class="field">
+                                                <div class="ui radio checkbox">
+                                                <input type="radio" name="agree" checked="" tabindex="0" class="hidden" value="Yes">
+                                                <label>Yes</label>
+                                                </div>
+                                            </div>
+                                            <div class="field">
+                                                <div class="ui radio checkbox">
+                                                    <input type="radio" name="agree" tabindex="0" class="hidden" value="No">
+                                                    <label>No</label>
+                                                </div>
+                                            </div>                                    
+                                        </div>
+                                        <div class="ui center aligned grid">
+                                            <div class="ui column">
+                                                <button class="ui button" type="submit">Add comment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="ui comments">
+                                    {% for comment in line.comments.all %}
+                                        <div class="negative comment">
+                                            <a class="large avatar">
+                                                <img src="https://png.pngtree.com/png-vector/20191104/ourmid/pngtree-businessman-avatar-cartoon-style-png-image_1953664.jpg" class="commentAvatar">
+                                            </a>
+                                            <div class="content">
+                                                <a class="author">{{comment.user.name}}</a>
+                                                <div class="metadata">
+                                                <span class="date">{{ comment.created_at }}</span>
+                                                {% if comment.agree %}
+                                                    <span class="agree">Agrees</span>
+                                                {% else %}
+                                                    <span class="disagree">Disagrees</span>
+                                                {% endif %}
+                                                </div>
+                                                <div class="text">
+                                                <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius suscipit nulla quis, ut magni nihil maxime sit! Consectetur ratione dicta tempora odit, excepturi quos, ad minus eligendi unde quis laboriosam. -->
+                                                {{ comment.opinion }}
+                                                </div>
+                                                <div class="actions">
+                                                    <a href = {{ comment.references }}>Source</a>
+                                                    <!-- <a class="upvote" key = {{ comment.id }}><i class="ui check icon" key = {{ comment.id }}></i>{{ comment.upvotes }}</a>
+                                                    <a class="downvote" key = {{ comment.id }}><i class="ui close icon" key = {{ comment.id }}></i>{{ comment.downvotes }}</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="actions">
+                                <div class="ui cancel button">Close</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="ui tiny modal addComment">
+                    <div class="header">Add comment</div>
+                    <div class="content">
+                        <div class="ui padded grid">
+                            <form class="ui form" style="width: 100% !important" method="POST" action="/annotation/add_annotation">
+                                {% csrf_token %}
+                                <div class="field">
+                                    <label for="">Opinion</label>
+                                    <textarea name="text" cols="30" rows="10" style="width: 100% !important; resize: none !important;;"></textarea>
+                                </div>
+                                <div class="field">
+                                    <label for="">Source</label>
+                                    <input type="url" name="link">
+                                </div>
+                                <input type="hidden" name="id" id="lineID">
+                                <div class="inline fields">
+                                    <label for="">Do you agree with the line?</label>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                          <input type="radio" name="agree" checked="" tabindex="0" class="hidden" value="yes">
+                                          <label>Yes</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="agree" tabindex="0" class="hidden" value="no">
+                                            <label>No</label>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="ui center aligned grid">
+                                    <div class="ui column">
+                                        <button class="ui button" type="submit">Add comment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% for line in article.line_set.all %}
+{% if line.comments.all|length %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let chart;
+
+        chart = Highcharts.chart('chartContainer{{ line.id }}', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            credits:{
+                enabled: false
+            },
+            title: {
+                text: 'Opinions regarding the statement'
+            },
+            tooltip: {
+                pointFormat: '{series.data.name} <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    },
+                    showInLegend: true
+                }
+            },
+            colors: ['#55C153', '#CE4343'],
+            series: [{
+                colorByPoint: true,
+                data: [{
+                    name: 'Agree',
+                    y: {{ line.total_upvotes }},
+                    // sliced: true,
+                    // selected: true
+                }, {
+                    name: 'Disagree',
+                    y: {{ line.total_downvotes }}
+                }]
+            }]
+        });
+    });
+    $('#{{ line.id }}').click((e)=>{
+            $('.ui.tiny.modal{{line.id}}').modal('show');
+            $('.ui.radio.checkbox').checkbox();
+    })
+    $('.addComment{{line.id}}').click((e)=>{
+        $('.innerForm{{line.id}}').css("display", "block");
+    })
+</script>
+{% endif %}
+{% endfor %}
+    
+</body>
+
+
+<script>
+    $('body').on('click', '.notHighlighted', (e)=>{
+        $('.addComment').modal('show');
+        $('.ui.radio.checkbox').checkbox()
+        $('#lineID').val($(e.target).attr('id'))
+        console.log($(e.target).attr('id'))
+    })
+    // $('body').on('click', '.upvote', (e)=>{
+    //     fetch('/annotation/vote', {
+    //         'X-CSRF-TOKEN': "{{ csrf_token }}",
+    //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            
+    //         headers: {
+    //         'Content-Type': 'application/json'
+    //         // 'Content-Type': 'application/x-www-form-urlencoded',
+    //         },
+    //         body: JSON.stringify({id: $(e.target).attr('key'), vote: 1}) // body data type must match "Content-Type" header
+    //     }).then((res)=>{
+    //         res.json().then((json)=>{
+    //             console.log(json)
+    //         })
+    //     }).catch(err=>{
+    //         console.log(err)
+    //     })
+    // })
+    // $('body').on('click', '.downvote', (e)=>{
+    //     fetch('/annotation/vote', {
+    //         'X-CSRF-TOKEN': "{{ csrf_token }}",
+    //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    //         headers: {
+    //             'Content-Type': 'x-www-form-urlencoded',
+    //         // 'Content-Type': 'application/x-www-form-urlencoded',
+    //         },
+    //         body: JSON.stringify({id: $(e.target).attr('key'), vote: -1}) // body data type must match "Content-Type" header
+    //     }).then((res)=>{
+    //         res.json().then((json)=>{
+    //             console.log(json)
+    //         })
+    //     }).catch(err=>{
+    //         console.log(err)
+    //     })
+    // })
+</script>
+
+</html>
+
+
+
+
+

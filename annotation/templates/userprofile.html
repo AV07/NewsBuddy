@@ -1,0 +1,71 @@
+<!-- Add icon library -->
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style type="text/css">
+    .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  /*height: 100%;*/
+  /*background: url({% static 'homeBackground.svg' %})*/
+  background: #fbfafd
+}
+
+
+.title {
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: rgb(55, 99, 174);
+  background-color: #0000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  max-width: 900px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+<html>
+<body background="{% static 'homeBackground.svg' %}">
+<div class="card">
+  <!-- <img src="img.jpg" alt="John" style="width:100%"> -->
+  <h1>{{ user.name }}</h1>
+  <h2> Total marked 1 </h2>
+  <a href="#"><i class="fa fa-graduation-cap"></i></a>
+  <a href="#"><i class="fa fa-fire"></i></a>
+  <a href="#"><i class="fa fa-heartf"></i></a>
+  <br>
+  <br>
+  <br>
+  <br>
+      {% for comment in user.comment_set.all %}
+         
+  <button>
+
+   {% if comment.agreement %} <i class="fa fa-plus"></i>{% else %}<i class="fa fa-minus"></i> {% endif %} {{comment.opinion}}| {{comment.line.article.link}}
+    </button>
+    <br>{% endfor %}
+    <button><p>Back to home</p></button>
+    <!-- <button><p><i class="fa fa-backspace"></i></p></button> -->
+</div>
+
+</body>
+</html>
+
