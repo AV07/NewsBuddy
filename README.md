@@ -74,9 +74,10 @@ python3 manage.py runserver
 <img width="1200" alt="Screenshot 2021-05-16 at 16 58 54" src="https://user-images.githubusercontent.com/42066451/118395448-26dffe80-b668-11eb-96fd-a7f6c209ff1b.png">
 
 ## Team :star:
-[Anuneet Anand](https://github.com/anuneetanand)
-[Atul Verma]()
-[Dhruv Yadav]()
-[Divyam Gupta](https://github.com/dgupta04)
-[Sanchit Trivedi](https://github.com/Sanchit-Trivedi)
-[Vishwesh Kumar](https://github.com/vishwesh-D-kumar)
+[Anuneet Anand](https://github.com/anuneetanand)            
+[Atul Verma]()          
+[Dhruv Yadav]()         
+[Divyam Gupta](https://github.com/dgupta04)         
+[Sanchit Trivedi](https://github.com/Sanchit-Trivedi)       
+[Vishwesh Kumar](https://github.com/vishwesh-D-kumar)           
+        
