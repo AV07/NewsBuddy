@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <title>Welcome to NewsBuddy</title>
+    <style>
+        body{
+            overflow:hidden !important;
+        }
+        *{
+            font-family: "Pathway Gothic One" !important;
+        }
+        .ui.fluid.container{
+            background: url('./homeBackground.svg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: calc(100vh + 1rem) !important;
+        }
+        .mainContainer{
+            margin-top: 15vh;
+        }
+        .heading{
+            font-size: 10em !important;
+            color: white !important;
+        }
+        .subHeading{
+            font-size: 4em !important;
+        }
+        .searchBar{
+            height: 6vh !important;
+            width: 50% !important;
+            letter-spacing: 3em !important;
+            font-size: 1.5em !important;
+        }
+        input{
+            font-family: Montserrat !important;
+        }
+        .searchButton{
+            width: 16% !important;
+            background-color: #85a6d4;
+            font-family: Montserrat !important;
+            padding-left: 3.3rem !important;
+            font-weight: normal !important;
+            font-size: 1.1em !important;
+            text-align: center !important;
+        }
+        .menuContainer{
+            margin-top: calc(31.5vh) !important;
+        }
+        .item{
+            font-size: 2em !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui fluid container">
+        <div class="ui center aligned grid">
+            <div class="ui sixteen wide column mainContainer">
+                <div class="ui header heading">
+                    NewsBuddy
+                </div>
+                <div class="ui header heading subHeading">
+                    Truth for the people, Truth by the people
+                </div>
+                <br><br><br>
+                <div class="ui action input searchBar">
+                    <input type="text" placeholder="Enter news article link here">
+                    <button class="ui primary button searchButton">Go</button>
+                </div>
+                <!-- <div class="ui fluid container"> -->
+                <div class="ui center aligned grid menuContainer">
+                    <div class="ui menu" style="background: transparent !important; border: none !important">                        
+                        <div class="menu">
+                            <div class="borderless item">
+                                About NewsBuddy
+                            </div>
+                            <div class="borderless item">
+                                How It Works
+                            </div>
+                            <div class="borderless item">
+                                The Team
+                            </div>
+                            <div class="borderless item">
+                                Profile
+                            </div>                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
